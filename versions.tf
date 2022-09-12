@@ -5,7 +5,7 @@ terraform {
     hostname     = "app.terraform.io"
 
     workspaces {
-      name = "f5-xc-namespace"
+      name = "f5-xc-"
     }
   }
 

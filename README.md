@@ -15,20 +15,6 @@ This repository consists of Terraform templates to create Azure Marketplace agre
 ### Example Output
 
 ```bash
-
-```
-
-## Create Azure Marketplace Agreement
-
-First time only state import needed:
-
-```bash
-terraform import module.f5xc_azure_marketplace_agreement_single_nic.azurerm_marketplace_agreement.f5xc_azure_ce_singel_nic /subscriptions/e9cbbd48-704d-4dfa-bf62-60edda755a66/providers/Microsoft.MarketplaceOrdering/agreements/volterraedgeservices/offers/volterra-node/plans/volterra-node
-terraform import module.f5xc_azure_marketplace_agreement_multi_nic.azurerm_marketplace_agreement.f5xc_azure_ce /subscriptions/e9cbbd48-704d-4dfa-bf62-60edda755a66/providers/Microsoft.MarketplaceOrdering/agreements/volterraedgeservices/offers/entcloud_voltmesh_voltstack_node/plans/freeplan_entcloud_voltmesh_voltstack_node_multinic
-terraform import module.f5xc_azure_marketplace_agreement_app_stack.azurerm_marketplace_agreement.f5xc_azure_ce /subscriptions/e9cbbd48-704d-4dfa-bf62-60edda755a66/providers/Microsoft.MarketplaceOrdering/agreements/volterraedgeservices/offers/entcloud_voltmesh_voltstack_node/plans/freeplan_entcloud_voltmesh_voltstack_node
-```
-
-```hcl
 Terraform used the selected providers to generate the following execution plan. Resource actions are indicated with the following symbols:
   + create
 
@@ -77,4 +63,59 @@ module.f5xc_azure_marketplace_agreement_single_nic.azurerm_marketplace_agreement
 Releasing state lock. This may take a few moments...
 
 Apply complete! Resources: 3 added, 0 changed, 0 destroyed.
+```
+
+## Create Azure Marketplace Agreement
+
+First time only state import needed. Make sure to adapt module names:
+
+```bash
+terraform import module.f5xc_azure_marketplace_agreement_single_nic.azurerm_marketplace_agreement.f5xc_azure_ce_singel_nic /subscriptions/e9cbbd48-704d-4dfa-bf62-60edda755a66/providers/Microsoft.MarketplaceOrdering/agreements/volterraedgeservices/offers/volterra-node/plans/volterra-node
+terraform import module.f5xc_azure_marketplace_agreement_multi_nic.azurerm_marketplace_agreement.f5xc_azure_ce /subscriptions/e9cbbd48-704d-4dfa-bf62-60edda755a66/providers/Microsoft.MarketplaceOrdering/agreements/volterraedgeservices/offers/entcloud_voltmesh_voltstack_node/plans/freeplan_entcloud_voltmesh_voltstack_node_multinic
+terraform import module.f5xc_azure_marketplace_agreement_app_stack.azurerm_marketplace_agreement.f5xc_azure_ce /subscriptions/e9cbbd48-704d-4dfa-bf62-60edda755a66/providers/Microsoft.MarketplaceOrdering/agreements/volterraedgeservices/offers/entcloud_voltmesh_voltstack_node/plans/freeplan_entcloud_voltmesh_voltstack_node
+```
+
+```hcl
+variable "azure_client_id" {
+  type    = string
+}
+
+variable "azure_client_secret" {
+  type    = string
+}
+
+variable "azure_tenant_id" {
+  type    = string
+}
+
+variable "azure_subscription_id" {
+  type    = string
+}
+
+module "f5xc_azure_marketplace_agreement_single_nic" {
+  source                           = "./modules/azure/agreement"
+  azure_client_id                  = var.azure_client_id
+  azure_client_secret              = var.azure_client_secret
+  azure_tenant_id                  = var.azure_tenant_id
+  azure_subscription_id            = var.azure_subscription_id
+  f5xc_azure_ce_gw_type            = "single_nic"
+}
+
+module "f5xc_azure_marketplace_agreement_multi_nic" {
+  source                           = "./modules/azure/agreement"
+  azure_client_id                  = var.azure_client_id
+  azure_client_secret              = var.azure_client_secret
+  azure_tenant_id                  = var.azure_tenant_id
+  azure_subscription_id            = var.azure_subscription_id
+  f5xc_azure_ce_gw_type            = "multi_nic"
+}
+
+module "f5xc_azure_marketplace_agreement_app_stack" {
+  source                           = "./modules/azure/agreement"
+  azure_client_id                  = var.azure_client_id
+  azure_client_secret              = var.azure_client_secret
+  azure_tenant_id                  = var.azure_tenant_id
+  azure_subscription_id            = var.azure_subscription_id
+  f5xc_azure_ce_gw_type            = "app_stack"
+}
 ```
