@@ -76,6 +76,7 @@ terraform import module.f5xc_azure_marketplace_agreement_app_stack.azurerm_marke
 ```
 
 ```hcl
+test
 variable "azure_client_id" {
   type    = string
 }
