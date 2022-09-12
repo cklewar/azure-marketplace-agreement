@@ -15,7 +15,7 @@ This repository consists of Terraform templates to create Azure Marketplace agre
 ### Example Output
 
 ```bash
-test
+test123
 Terraform used the selected providers to generate the following execution plan. Resource actions are indicated with the following symbols:
   + create
 
